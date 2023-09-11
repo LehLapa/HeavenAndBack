@@ -1,5 +1,5 @@
 # HeavenAndBack-LP
-Esse projeto é um jogo criado na game engine Unity. Abordando o tema de céu e inferno, o player irá explorar e interagir com o cenário que trás a temática do caminho da igreja, até os portões do inferno.
+Esse projeto é um jogo criado na game engine Unity. Abordando o tema de céu e inferno, o player irá explorar e interagir com o cenário que trás a temática do caminho da igreja, até os portões do inferno. Dulpa no Laboratório: Letícia Lapa e Lucas Carvalho.
 
 # Diagrama Caso de Uso - Unity
 ![Diagrama Caso de Uso Unity](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/ff9e6dfe-65b3-41cd-8b2e-30966dd7d7e4)
