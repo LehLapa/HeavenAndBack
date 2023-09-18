@@ -29,15 +29,19 @@ Para criar esse projeto foram utilizados os seguintes passos:
 1. baixar assets na assets store.
 
 - Esses foram os assets baixados para compor a cena do projeto.
-![WhatsApp Image 2023-09-18 at 18 41 04](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/70102de4-8f58-4c3d-9232-21b05511f82b)
-![WhatsApp Image 2023-09-18 at 18 40 29](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/b1dd1085-b361-4220-9b6f-76f9e47bc1bd)
-![WhatsApp Image 2023-09-18 at 18 40 17](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/f6bd7430-66e8-42a9-8a34-0d6a1ddb08cd)
-![WhatsApp Image 2023-09-18 at 18 41 57](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/745d8a11-6532-4d8a-9b6a-7afade18aa2b)
-![WhatsApp Image 2023-09-18 at 18 41 40](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/c30e1a20-d20d-461c-87d6-633235f30f92)
+![Asset Pedra](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/1185a02f-6078-4d9e-9e0a-3de10330c343)
+![Asset Portal](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/928c94b4-4344-49e5-b1ab-bfc3f7030ef3)
+![Asset Banco](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/01fb7acb-febe-490b-a269-f28066d5f85f)
+![Asset Arvore](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/143e8518-fc47-453e-8d68-2a95f28a738c)
+![Asset Rua](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/da8fc4ae-274c-46ec-b154-56af2d187303)
+![Asset Bar](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/6c92c724-bf1b-4ac5-b112-09a46dbee665)
+![Asset Comida](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/731b68b5-6619-43ed-9af8-768523965239)
+![Asset Mesa Bar](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/a3199c4d-53a4-4120-ba3c-0f5899fa24c8)
+![Asset Lampada](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/9dc86bcf-b540-4816-9753-2174272b1cc4)
 
 - Colocar o personagem que irá receber os scripts.
-![WhatsApp Image 2023-09-18 at 18 40 44](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/1273cad8-fb89-4ae2-9eb6-59a55b646594)
-![WhatsApp Image 2023-09-18 at 18 40 02](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/fad963b2-1773-484c-bfa1-ae87ddf3d003)
+![Demonio](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/4bceaa93-638c-4d8e-a91b-2845b7cab276)
+![Player](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/cd5d5f14-08ce-44d7-baaa-f557f651aed9)
 
 2. Criar os scripts e programar
    Foram usados 3 Scripts para o projeto.
