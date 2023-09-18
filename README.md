@@ -29,6 +29,7 @@ Para criar esse projeto foram utilizados os seguintes passos:
 1. baixar assets na assets store.
 
 - Esses foram os assets baixados para compor a cena do projeto.
+  
 ![Asset Pedra](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/1185a02f-6078-4d9e-9e0a-3de10330c343)
 ![Asset Portal](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/928c94b4-4344-49e5-b1ab-bfc3f7030ef3)
 ![Asset Banco](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/01fb7acb-febe-490b-a269-f28066d5f85f)
@@ -39,9 +40,15 @@ Para criar esse projeto foram utilizados os seguintes passos:
 ![Asset Mesa Bar](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/a3199c4d-53a4-4120-ba3c-0f5899fa24c8)
 ![Asset Lampada](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/9dc86bcf-b540-4816-9753-2174272b1cc4)
 
+
+
 - Colocar o personagem que irá receber os scripts.
+
+
 ![Demonio](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/4bceaa93-638c-4d8e-a91b-2845b7cab276)
 ![Player](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/cd5d5f14-08ce-44d7-baaa-f557f651aed9)
+
+
 
 2. Criar os scripts e programar
    Foram usados 3 Scripts para o projeto.
