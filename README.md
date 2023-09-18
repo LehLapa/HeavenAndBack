@@ -432,6 +432,9 @@ O script consiste nos seguintes componentes principais:
 
 ## Entrada do Player
 
+![WhatsApp Image 2023-09-17 at 20 04 33](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/96129e93-ffa1-470c-95dc-4dc1d6720c9f)
+
+
 Este script controla a entrada do jogador no Unity. Ele lida com o movimento do jogador, saltos e ação de sentar-se.
 
 ## Recursos:
@@ -584,7 +587,6 @@ e `jumpHeight` (altura do salto). A variável `physicalCC` deve ser atribuída c
 ## NPC Follow Script
 O NPC Follow Script é um script simples em C# para Unity que permite que um NPC siga um alvo (por exemplo, um jogador) em um jogo. Este script pode ser usado para criar comportamentos de perseguição de personagens não jogáveis (NPCs) em seu jogo.
 
-![WhatsApp Image 2023-09-17 at 20 04 33](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/96129e93-ffa1-470c-95dc-4dc1d6720c9f)
 
 ## Funcionalidades:
 Permite que um NPC siga um alvo (como um jogador) em uma cena.
@@ -628,9 +630,16 @@ public class NPCFollow : MonoBehaviour
     }
 }
 
+
+
 ## Mudar de fase
 O Mudar de Fase é um script Unity simples em C# que permite que você mude de uma cena para outra pressionando uma tecla (por exemplo, a tecla "E"). Este script pode ser usado para criar transições de fase ou níveis em seu jogo.
 ![WhatsApp Image 2023-09-17 at 20 03 34](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/85b2d218-cd70-4f10-877c-f58233ceb95f)
+
+![WhatsApp Image 2023-09-17 at 20 05 39](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/a8e7414f-5bac-4be0-baa1-f5318e6bdee9)
+
+![WhatsApp Image 2023-09-17 at 20 05 24 (1)](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/db85d533-27a2-4c18-970b-1574ceb2bf9f)
+
 
 ## Funcionalidades:
 Carrega uma cena específica quando a tecla designada é pressionada (por padrão, a tecla "E").
