@@ -19,11 +19,12 @@ No Diagrama possuimos a Classe Jogo, que utiliza do atributo Personagem e em seu
 Para ver essa cena é preciso o Unity com a versão 2021.3.22f1
 
 ## Instalação 
-1. Clonar o projeto 
+1. Clonar o projeto
+(Pasta está zipada para preservação do Projeto construído na Unity. Possuindo Scripts no C#, Projeto da Unity e Imagens do Diagrama de Caso de Uso e Diagrama de Classe).
 - https://drive.google.com/drive/folders/1hYeF0n-fHcYkPBvFNMxXO6DB6oiEbCTd?usp=sharing
 2. Assistir Gameplay disponível no Youtube
 - https://youtu.be/aKfdz1C8GKg
-4. Abrir o projeto no Unity.
+3. Abrir o projeto no Unity.
 
 ## Desenvolvimento
 Para criar esse projeto foram utilizados os seguintes passos:
