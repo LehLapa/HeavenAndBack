@@ -3,8 +3,8 @@ Esse projeto é um jogo criado na game engine Unity. Abordando o tema de céu e 
 - Dupla no Laboratório: Letícia Lapa e Lucas Carvalho.
   
 ## Músicas Utilizadas:
-Highway To Hell by AC/DC (Primeira cena e segunda cena).
-Sanctified With Dynamite by Powerwolf (Primeira cena e segunda cena).
+- Highway To Hell by AC/DC (Primeira cena e segunda cena).
+- Sanctified With Dynamite by Powerwolf (Primeira cena e segunda cena).
 
 # Diagrama Caso de Uso - Unity
 ![Diagrama Caso de Uso Unity](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/ff9e6dfe-65b3-41cd-8b2e-30966dd7d7e4)
