@@ -1,10 +1,10 @@
-# Heaven And Back - LP
+# Heaven And Back - LP (Game Engine Unity)
 Esse projeto é um jogo criado na game engine Unity. Abordando o tema de céu e inferno, o player irá explorar e interagir com o cenário que trás a temática do caminho da igreja, até os portões do inferno.
 ## Integrantes 
 - Aluna: Letícia da Lapa Silva
 - Aluno: Lucas Carvalho
 
-Cursando: ETEC Professor Basilídes de Godoy - Ensino Médio Integrado ao Curso Técnico de Programação de Jogos Digitais. 2ºA/2023
+**Cursando**: ETEC Professor Basilídes de Godoy - Ensino Médio Integrado ao Curso Técnico de Programação de Jogos Digitais. 2ºA/2023
   
 ## Músicas Utilizadas:
 - Highway To Hell by AC/DC (Primeira cena e segunda cena).
