@@ -61,7 +61,7 @@ Para criar esse projeto foram utilizados os seguintes passos:
 
 ## Controlador de Câmera
   Este script fornece um controlador de câmera no Unity que permite movimento suave e controlado da câmera com base na entrada do mouse. Ele permite que o jogador rotacione a câmera verticalmente e o personagem horizontalmente.
- ![WhatsApp Image 2023-09-17 at 20 05 11](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/d07309e3-18ab-4dd0-b320-a0becf650191)
+ ![Image](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/d07309e3-18ab-4dd0-b320-a0becf650191)
  
   ## Recursos:
 - Rotação vertical da câmera com limite máximo de ângulo
@@ -90,114 +90,114 @@ Para criar esse projeto foram utilizados os seguintes passos:
 
 csharp
 
-using System;
+    using System;
 
-using System.Collections;
+    using System.Collections;
 
-using System.Collections.Generic;
+    using System.Collections.Generic;
 
-using UnityEngine;
+    using UnityEngine;
 
-public class CameraController : MonoBehaviour
+    public class CameraController : MonoBehaviour
 
-{
+    {
 
-public Transform cameraTransform;
+    public Transform cameraTransform;
 
-public float maxVerticalAngle;
+    public float maxVerticalAngle;
 
-public Transform body;
+    public Transform body;
 
 // Variáveis privadas
 
-private float _mouseVerticalValue;
+    private float _mouseVerticalValue;
 
-private float MouseVerticalValue
+    private float MouseVerticalValue
 
-{
+    {
 
-get => _mouseVerticalValue;
+    get => _mouseVerticalValue;
 
-set
+    set
 
-{
+    {
 
-if (value == 0) return;
+    if (value == 0) return;
 
-float verticalAngle = _mouseVerticalValue + value;
+    float verticalAngle = _mouseVerticalValue + value;
 
-verticalAngle = Mathf.Clamp(verticalAngle, -maxVerticalAngle, maxVerticalAngle);
+    verticalAngle = Mathf.Clamp(verticalAngle, -maxVerticalAngle, maxVerticalAngle);
 
-_mouseVerticalValue = verticalAngle;
+    _mouseVerticalValue = verticalAngle;
 
-}
+    }
 
-}
+    }
 
-public float sensitivity;
+    public float sensitivity;
 
 // O método Update é chamado uma vez por quadro
 
-void Update()
+    void Update()
 
-{
+    {
 
 // Captura o movimento vertical do mouse
 
-MouseVerticalValue = Input.GetAxis("Mouse Y");
+    MouseVerticalValue = Input.GetAxis("Mouse Y");
 
 // Calcula a rotação desejada com base no movimento vertical
 
-Quaternion finalRotation = Quaternion.Euler(
+    Quaternion finalRotation = Quaternion.Euler(
 
--MouseVerticalValue * sensitivity,
+    -MouseVerticalValue * sensitivity,
 
-0, 0);
+    0, 0);
 
 // Aplica a rotação à câmera
 
-cameraTransform.localRotation = finalRotation;
+    cameraTransform.localRotation = finalRotation;
 
 // Rotaciona o personagem horizontalmente com base no movimento do mouse
 
-body.rotation = Quaternion.Euler(
+    body.rotation = Quaternion.Euler(
 
-0,
+    0,
 
-body.localRotation.eulerAngles.y + Input.GetAxis("Mouse X") * sensitivity,
+    body.localRotation.eulerAngles.y + Input.GetAxis("Mouse X") * sensitivity,
 
-0);
+    0);
 
 // Bloqueia o cursor e o esconde quando o botão esquerdo do mouse é pressionado
 
-if (Input.GetMouseButtonDown(0))
+    if (Input.GetMouseButtonDown(0))
 
-{
+    {
 
-Cursor.lockState = CursorLockMode.Locked;
+    Cursor.lockState = CursorLockMode.Locked;
 
-Cursor.visible = false;
+    Cursor.visible = false;
 
-}
+    }
 
 // Desbloqueia o cursor e o mostra quando a tecla Esc é pressionada
 
-if (Input.GetKeyDown(KeyCode.Escape))
+    if (Input.GetKeyDown(KeyCode.Escape))
 
-{
+    {
 
-Cursor.lockState = CursorLockMode.None;
+    Cursor.lockState = CursorLockMode.None;
 
-Cursor.visible = true;
+    Cursor.visible = true;
 
-}
+    }
 
-}
+    }
 
-}
+    }
 
 
-O script consiste nos seguintes componentes principais:
+**O script consiste nos seguintes componentes principais**:
 
 - *Variáveis Públicas*: Essas variáveis podem ser configuradas no Editor do Unity e permitem a personalização do comportamento do controlador de câmera. Elas incluem `cameraTransform` (o transform da câmera), `maxVerticalAngle` (o ângulo máximo que a câmera pode rotacionar verticalmente), `body` (o transform do personagem
 
@@ -235,196 +235,196 @@ Este script implementa um controlador de personagem físico no Unity, usando o c
 
 csharp
 
-using System.Collections;
+    using System.Collections;
 
-using UnityEngine;
+    using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(CharacterController))]
 
-public class PhysicalCC : MonoBehaviour
+    public class PhysicalCC : MonoBehaviour
 
-{
+    {
 
-public CharacterController cc { get; private set; }
+    public CharacterController cc { get; private set; }
+    
+    private IEnumerator dampingCor;
 
-private IEnumerator dampingCor;
+    [Header("Verificação do Solo")]
 
-[Header("Verificação do Solo")]
+    public bool isGround;
 
-public bool isGround;
+    public float groundAngle;
 
-public float groundAngle;
+    public Vector3 groundNormal { get; private set; }
 
-public Vector3 groundNormal { get; private set; }
+    [Header("Movimentação")]
 
-[Header("Movimentação")]
+    public bool ProjectMoveOnGround;
 
-public bool ProjectMoveOnGround;
+    public Vector3 moveInput;
 
-public Vector3 moveInput;
+    private Vector3 moveVelocity;
 
-private Vector3 moveVelocity;
+    [Header("Inércia e Inclinação")]
 
-[Header("Inércia e Inclinação")]
+    public float slopeLimit = 45;
 
-public float slopeLimit = 45;
+    public float inertiaDampingTime = 0.1f;
 
-public float inertiaDampingTime = 0.1f;
+    public float slopeStartForce = 3f;
 
-public float slopeStartForce = 3f;
+    public float slopeAcceleration = 3f;
+    
+    public Vector3 inertiaVelocity;
 
-public float slopeAcceleration = 3f;
+    [Header("Interação com Plataforma")]
+    
+    public bool platformAction;
+    
+    public Vector3 platformVelocity;
+    
+    [Header("Colisão")]
 
-public Vector3 inertiaVelocity;
-
-[Header("Interação com Plataforma")]
-
-public bool platformAction;
-
-public Vector3 platformVelocity;
-
-[Header("Colisão")]
-
-public bool applyCollision = true;
-
-public float pushForce = 55f;
-
-private void Start()
-
-{
-
-cc = GetComponent<CharacterController>();
-
-}
-
-private void Update()
-
-{
-
-GroundCheck();
-
-if (isGround)
-
-{
-
-moveVelocity = ProjectMoveOnGround ? Vector3.ProjectOnPlane(moveInput, groundNormal) : moveInput;
-
-if (groundAngle < slopeLimit && inertiaVelocity != Vector3.zero) InertiaDamping();
-
-}
-
-GravityUpdate();
-
-Vector3 moveDirection = (moveVelocity + inertiaVelocity + platformVelocity);
-
-cc.Move((moveDirection) * Time.deltaTime);
-
-}
-
-private void GravityUpdate()
-
-{
-
-if (isGround && groundAngle > slopeLimit)
-
-{
-
-inertiaVelocity += Vector3.ProjectOnPlane(groundNormal.normalized + (Vector3.down * (groundAngle / 30)).normalized * Mathf.Pow(slopeStartForce, slopeAcceleration), groundNormal) * Time.deltaTime;
-
-}
-
-else if (!isGround) inertiaVelocity.y -= Mathf.Pow(3f, 3) * Time.deltaTime;
-
-}
-
-private void InertiaDamping()
-
-{
-
-var a = Vector3.zero;
+    public bool applyCollision = true;
+    
+    public float pushForce = 55f;
+    
+    private void Start()
+    
+    {
+    
+    cc = GetComponent<CharacterController>();
+    
+    }
+    
+    private void Update()
+    
+    {
+    
+    GroundCheck();
+    
+    if (isGround)
+    
+    {
+    
+    moveVelocity = ProjectMoveOnGround ? Vector3.ProjectOnPlane(moveInput, groundNormal) : moveInput;
+    
+    if (groundAngle < slopeLimit && inertiaVelocity != Vector3.zero) InertiaDamping();
+    
+    }
+    
+    GravityUpdate();
+    
+    Vector3 moveDirection = (moveVelocity + inertiaVelocity + platformVelocity);
+    
+    cc.Move((moveDirection) * Time.deltaTime);
+    
+    }
+    
+    private void GravityUpdate()
+    
+    {
+    
+    if (isGround && groundAngle > slopeLimit)
+    
+    {
+    
+    inertiaVelocity += Vector3.ProjectOnPlane(groundNormal.normalized + (Vector3.down * (groundAngle / 30)).normalized * Mathf.Pow(slopeStartForce, slopeAcceleration), groundNormal) * Time.deltaTime;
+    
+    }
+    
+    else if (!isGround) inertiaVelocity.y -= Mathf.Pow(3f, 3) * Time.deltaTime;
+    
+    }
+    
+    private void InertiaDamping()
+    
+    {
+    
+    var a = Vector3.zero;
 
 // desaceleração da inércia quando a força do movimento é aplicada
 
-var resistanceAngle = Vector3.Angle(Vector3.ProjectOnPlane(inertiaVelocity, groundNormal),
-
-Vector3.ProjectOnPlane(moveVelocity, groundNormal));
-
-resistanceAngle = resistanceAngle == 0 ? 90 : resistanceAngle;
-
-inertiaVelocity = (inertiaVelocity + moveVelocity).magnitude <= 0.1f ? Vector3.zero : Vector3.SmoothDamp(inertiaVelocity, Vector3.zero, ref a, inertiaDampingTime / (
-
-3 / (180 / resistanceAngle)));
-
-}
-
-private void GroundCheck()
-
-{
-
-if (Physics.SphereCast(transform.position, cc.radius, Vector3.down, out RaycastHit hit, cc.height / 2 - cc.radius + 0.01f))
-
-{
-
-isGround = true;
-
-groundAngle = Vector3.Angle(Vector3.up, hit.normal);
-
-groundNormal = hit.normal;
-
-if (hit.transform.tag == "Platform")
-
-platformVelocity = hit.collider.attachedRigidbody == null | !platformAction ?
-
-Vector3.zero : hit.collider.attachedRigidbody.velocity;
-
-if (Physics.BoxCast(transform.position, new Vector3(cc.radius / 2.5f, cc.radius / 3f, cc.radius / 2.5f),
-
-Vector3.down, out RaycastHit helpHit, transform.rotation, cc.height / 2 - cc.radius / 2))
-
-{
-
-groundAngle = Vector3.Angle(Vector3.up, helpHit.normal);
-
-}
-
-}
-
-else
-
-{
-
-platformVelocity = Vector3.zero;
-
-isGround = false;
-
-}
-
-}
-
-private void OnControllerColliderHit(ControllerColliderHit hit)
-
-{
-
-if (!applyCollision) return;
-
-Rigidbody body = hit.collider.attachedRigidbody;
+    var resistanceAngle = Vector3.Angle(Vector3.ProjectOnPlane(inertiaVelocity, groundNormal),
+    
+    Vector3.ProjectOnPlane(moveVelocity, groundNormal));
+    
+    resistanceAngle = resistanceAngle == 0 ? 90 : resistanceAngle;
+    
+    inertiaVelocity = (inertiaVelocity + moveVelocity).magnitude <= 0.1f ? Vector3.zero : Vector3.SmoothDamp(inertiaVelocity, Vector3.zero, ref a, inertiaDampingTime / (
+    
+    3 / (180 / resistanceAngle)));
+    
+    }
+    
+    private void GroundCheck()
+    
+    {
+    
+    if (Physics.SphereCast(transform.position, cc.radius, Vector3.down, out RaycastHit hit, cc.height / 2 - cc.radius + 0.01f))
+    
+    {
+    
+    isGround = true;
+    
+    groundAngle = Vector3.Angle(Vector3.up, hit.normal);
+    
+    groundNormal = hit.normal;
+    
+    if (hit.transform.tag == "Platform")
+    
+    platformVelocity = hit.collider.attachedRigidbody == null | !platformAction ?
+    
+    Vector3.zero : hit.collider.attachedRigidbody.velocity;
+    
+    if (Physics.BoxCast(transform.position, new Vector3(cc.radius / 2.5f, cc.radius / 3f, cc.radius / 2.5f),
+    
+    Vector3.down, out RaycastHit helpHit, transform.rotation, cc.height / 2 - cc.radius / 2))
+    
+    {
+    
+    groundAngle = Vector3.Angle(Vector3.up, helpHit.normal);
+    
+    }
+    
+    }
+    
+    else
+    
+    {
+    
+    platformVelocity = Vector3.zero;
+    
+    isGround = false;
+    
+    }
+    
+    }
+    
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    
+    {
+    
+    if (!applyCollision) return;
+    
+    Rigidbody body = hit.collider.attachedRigidbody;
 
 // verificar rigidbody
 
-if (body == null || body.isKinematic) return;
-
-Vector3 pushDir = hit.point - (hit.point + hit.moveDirection.normalized);
+    if (body == null || body.isKinematic) return;
+    
+    Vector3 pushDir = hit.point - (hit.point + hit.moveDirection.normalized);
 
 // aplicar força de empurrão
 
-body.AddForce(pushDir * pushForce, ForceMode.Force);
+    body.AddForce(pushDir * pushForce, ForceMode.Force);
+    
+    }
+    
+    }
 
-}
 
-}
-
-
-O script consiste nos seguintes componentes principais:
+**O script consiste nos seguintes componentes principais**:
 
 - *Variáveis Públicas*: Essas variáveis podem ser configuradas no Editor do Unity e controlam o comportamento do controlador de personagem físico. Elas incluem `cc` (uma referência ao CharacterController), `isGround` (uma flag indicando se o personagem está no chão), `groundAngle` (o ângulo do terreno), `groundNormal` (o vetor normal do terreno), `moveInput` (o input de movimento), `slopeLimit` (o limite de inclinação em que o personagem pode se mover), `inertiaDampingTime` (o tempo de desaceleração da inércia), `slopeStartForce` (a força inicial ao subir uma rampa) e `applyCollision` (uma flag indicando se a colisão deve ser aplicada).
 
@@ -436,7 +436,7 @@ O script consiste nos seguintes componentes principais:
 
 ## Entrada do Player
 
-![WhatsApp Image 2023-09-17 at 20 04 33](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/96129e93-ffa1-470c-95dc-4dc1d6720c9f)
+![image](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/96129e93-ffa1-470c-95dc-4dc1d6720c9f)
 
 
 Este script controla a entrada do jogador no Unity. Ele lida com o movimento do jogador, saltos e ação de sentar-se.
@@ -467,113 +467,113 @@ Este script controla a entrada do jogador no Unity. Ele lida com o movimento do 
 
 csharp
 
-using System.Collections;
-
-using UnityEngine;
-
-public class PlayerInput : MonoBehaviour
-
-{
-
-public float speed = 5;
-
-public float jumpHeight = 15;
-
-public PhysicalCC physicalCC;
-
-public Transform bodyRender;
-
-private IEnumerator sitCort;
-
-private bool isSitting;
-
-private void Update()
-
-{
-
-if (physicalCC.isGround)
-
-{
-
-physicalCC.moveInput = Vector3.ClampMagnitude(transform.forward * Input.GetAxis("Vertical") +
-
-transform.right * Input.GetAxis("Horizontal"), 1f) * speed;
-
-if (Input.GetKeyDown(KeyCode.Space))
-
-{
-
-physicalCC.inertiaVelocity.y = 0f;
-
-physicalCC.inertiaVelocity.y += jumpHeight;
-
-}
-
-if (Input.GetKeyDown(KeyCode.C) && sitCort == null)
-
-{
-
-sitCort = sitDown();
-
-StartCoroutine(sitCort);
-
-}
-
-}
-
-}
-
-private IEnumerator sitDown()
-
-{
-
-if (isSitting && Physics.Raycast(transform.position, Vector3.up, physicalCC.cc.height * 1.5f))
-
-{
-
-sitCort = null;
-
-yield break;
-
-}
-
-isSitting = !isSitting;
-
-float t = 0;
-
-float startSize = physicalCC.cc.height;
-
-float finalSize = isSitting ? physicalCC.cc.height / 2 : physicalCC.cc.height * 2;
-
-Vector3 startBodySize = bodyRender.localScale;
-
-Vector3 finalBodySize = isSitting ? bodyRender.localScale - Vector3.up * bodyRender.localScale.y / 2f : bodyRender.localScale + Vector3.up * bodyRender.localScale.y;
-
-speed = isSitting ? speed / 2 : speed * 2;
-
-jumpHeight = isSitting ? jumpHeight * 3 : jumpHeight / 3;
-
-while (t < 0.2f)
-
-{
-
-t += Time.deltaTime;
-
-physicalCC.cc.height = Mathf.Lerp(startSize, finalSize, t / 0.2f);
-
-bodyRender.localScale = Vector3.Lerp(startBodySize, finalBodySize, t / 0.2f);
-
-yield return null;
-
-}
-
-sitCort = null;
-
-yield break;
-
-}
-
-}
+    using System.Collections;
+    
+    using UnityEngine;
+    
+    public class PlayerInput : MonoBehaviour
+    
+    {
+    
+    public float speed = 5;
+    
+    public float jumpHeight = 15;
+    
+    public PhysicalCC physicalCC;
+    
+    public Transform bodyRender;
+    
+    private IEnumerator sitCort;
+    
+    private bool isSitting;
+    
+    private void Update()
+    
+    {
+    
+    if (physicalCC.isGround)
+    
+    {
+    
+    physicalCC.moveInput = Vector3.ClampMagnitude(transform.forward * Input.GetAxis("Vertical") +
+    
+    transform.right * Input.GetAxis("Horizontal"), 1f) * speed;
+    
+    if (Input.GetKeyDown(KeyCode.Space))
+    
+    {
+    
+    physicalCC.inertiaVelocity.y = 0f;
+    
+    physicalCC.inertiaVelocity.y += jumpHeight;
+    
+    }
+    
+    if (Input.GetKeyDown(KeyCode.C) && sitCort == null)
+    
+    {
+    
+    sitCort = sitDown();
+    
+    StartCoroutine(sitCort);
+    
+    }
+    
+    }
+    
+    }
+    
+    private IEnumerator sitDown()
+    
+    {
+    
+    if (isSitting && Physics.Raycast(transform.position, Vector3.up, physicalCC.cc.height * 1.5f))
+    
+    {
+    
+    sitCort = null;
+    
+    yield break;
+    
+    }
+    
+    isSitting = !isSitting;
+    
+    float t = 0;
+    
+    float startSize = physicalCC.cc.height;
+    
+    float finalSize = isSitting ? physicalCC.cc.height / 2 : physicalCC.cc.height * 2;
+    
+    Vector3 startBodySize = bodyRender.localScale;
+    
+    Vector3 finalBodySize = isSitting ? bodyRender.localScale - Vector3.up * bodyRender.localScale.y / 2f : bodyRender.localScale + Vector3.up * bodyRender.localScale.y;
+    
+    speed = isSitting ? speed / 2 : speed * 2;
+    
+    jumpHeight = isSitting ? jumpHeight * 3 : jumpHeight / 3;
+    
+    while (t < 0.2f)
+    
+    {
+    
+    t += Time.deltaTime;
+    
+    physicalCC.cc.height = Mathf.Lerp(startSize, finalSize, t / 0.2f);
+    
+    bodyRender.localScale = Vector3.Lerp(startBodySize, finalBodySize, t / 0.2f);
+    
+    yield return null;
+    
+    }
+    
+    sitCort = null;
+    
+    yield break;
+    
+    }
+    
+    }
 
 
 O script consiste nos seguintes componentes principais:
@@ -596,91 +596,95 @@ O NPC Follow Script é um script simples em C# para Unity que permite que um NPC
 Permite que um NPC siga um alvo (como um jogador) em uma cena.
 Ajuste a velocidade de movimento do NPC para controlar a rapidez com que ele segue o alvo.
 O NPC pode ser configurado para olhar sempre na direção do alvo.
-Requisitos
+
+## Requisitos
 Este script é projetado para ser usado em um projeto Unity. Você deve ter o Unity instalado para usá-lo.
-Como Usar
-Importação do Script: Copie o código do script e cole-o em um arquivo C# no seu projeto Unity.
 
-Vincule o Alvo: No Unity, selecione o NPC que você deseja que siga um alvo. No Inspector, você verá uma seção chamada "NPC Follow". Arraste o objeto que deseja que o NPC siga para o campo "Target".
+## Como Usar
+**Importação do Script**: Copie o código do script e cole-o em um arquivo C# no seu projeto Unity.
 
-Ajuste a Velocidade: Você pode ajustar a velocidade de movimento do NPC ajustando o valor no campo "Move Speed". Isso controlará o quão rápido o NPC segue o alvo.
+**Vincule o Alvo**: No Unity, selecione o NPC que você deseja que siga um alvo. No Inspector, você verá uma seção chamada "NPC Follow". Arraste o objeto que deseja que o NPC siga para o campo "Target".
 
-Opcional: Olhar para o Alvo: Se desejar que o NPC sempre olhe na direção do alvo, marque a opção "Look At Target" no Inspector.
+**Ajuste a Velocidade**: Você pode ajustar a velocidade de movimento do NPC ajustando o valor no campo "Move Speed". Isso controlará o quão rápido o NPC segue o alvo.
 
-Execute o Jogo: Execute o jogo no Unity e observe como o NPC segue o alvo configurado.
+**Opcional**: Olhar para o Alvo: Se desejar que o NPC sempre olhe na direção do alvo, marque a opção "Look At Target" no Inspector.
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+**Execute o Jogo**: Execute o jogo no Unity e observe como o NPC segue o alvo configurado.
 
-public class NPCFollow : MonoBehaviour
-{
-    public Transform target; // O alvo que o NPC deve seguir
-    public float moveSpeed = 5.0f; // Velocidade de movimento do NPC
-
-    private void Update()
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+    
+    public class NPCFollow : MonoBehaviour
     {
-        if (target != null)
+        public Transform target; // O alvo que o NPC deve seguir
+        public float moveSpeed = 5.0f; // Velocidade de movimento do NPC
+
+        private void Update()
         {
-            // Calcula a direção para o alvo
-            Vector3 direction = (target.position - transform.position).normalized;
-
-            // Move o NPC na direção do alvo
-            transform.Translate(direction * moveSpeed * Time.deltaTime);
-
-            // Rotaciona o NPC para enfrentar o alvo (opcional)
-            transform.LookAt(target);
+            if (target != null)
+            {
+                // Calcula a direção para o alvo
+                Vector3 direction = (target.position - transform.position).normalized;
+    
+                // Move o NPC na direção do alvo
+                transform.Translate(direction * moveSpeed * Time.deltaTime);
+    
+                // Rotaciona o NPC para enfrentar o alvo (opcional)
+                transform.LookAt(target);
+            }
         }
     }
-}
 
 
 
 ## Mudar de fase
 O Mudar de Fase é um script Unity simples em C# que permite que você mude de uma cena para outra pressionando uma tecla (por exemplo, a tecla "E"). Este script pode ser usado para criar transições de fase ou níveis em seu jogo.
-![WhatsApp Image 2023-09-17 at 20 03 34](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/85b2d218-cd70-4f10-877c-f58233ceb95f)
+![Image](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/85b2d218-cd70-4f10-877c-f58233ceb95f)
 
-![WhatsApp Image 2023-09-17 at 20 05 39](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/a8e7414f-5bac-4be0-baa1-f5318e6bdee9)
+![Image](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/a8e7414f-5bac-4be0-baa1-f5318e6bdee9)
 
-![WhatsApp Image 2023-09-17 at 20 05 24 (1)](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/db85d533-27a2-4c18-970b-1574ceb2bf9f)
+![Image](https://github.com/LehLapa/HeavenAndBack-LP/assets/128638269/db85d533-27a2-4c18-970b-1574ceb2bf9f)
 
 
 ## Funcionalidades:
 Carrega uma cena específica quando a tecla designada é pressionada (por padrão, a tecla "E").
 Pode ser personalizado para carregar qualquer cena do seu projeto Unity.
-Requisitos
+
+## Requisitos
 Este script é projetado para ser usado em um projeto Unity. Você deve ter o Unity instalado para usá-lo.
-Como Usar
-Importação do Script: Copie o código do script e cole-o em um arquivo C# no seu projeto Unity.
 
-Vincule a Cena de Destino: Abra o script no Inspector e insira o nome da cena que você deseja carregar no campo "Scene Name" (Nome da Cena).
+## Como Usar
+**Importação do Script**: Copie o código do script e cole-o em um arquivo C# no seu projeto Unity.
 
-Ajuste a Tecla de Ativação: Por padrão, o script é configurado para carregar a cena quando a tecla "E" for pressionada. Você pode ajustar essa tecla modificando a linha if (Input.GetKeyDown(KeyCode.E)).
+**Vincule a Cena de Destino**: Abra o script no Inspector e insira o nome da cena que você deseja carregar no campo "Scene Name" (Nome da Cena).
 
-Execute o Jogo: Execute o jogo no Unity e, quando estiver na cena onde deseja ativar a transição, pressione a tecla especificada para mudar para a cena de destino.
+**Ajuste a Tecla de Ativação**: Por padrão, o script é configurado para carregar a cena quando a tecla "E" for pressionada. Você pode ajustar essa tecla modificando a linha if (Input.GetKeyDown(KeyCode.E)).
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+**Execute o Jogo**: Execute o jogo no Unity e, quando estiver na cena onde deseja ativar a transição, pressione a tecla especificada para mudar para a cena de destino.
 
-public class MudarFase : MonoBehaviour
-{
-    void Update()
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+    using UnityEngine.SceneManagement;
+    
+    public class MudarFase : MonoBehaviour
     {
-        // Verifica se a tecla "E" foi pressionada.
-        if (Input.GetKeyDown(KeyCode.E))
-        { 
-            CarregarFase(); // Chama a função para carregar a cena.
+        void Update()
+        {
+            // Verifica se a tecla "E" foi pressionada.
+            if (Input.GetKeyDown(KeyCode.E))
+            { 
+                CarregarFase(); // Chama a função para carregar a cena.
+            }
+        }
+
+        private void CarregarFase()
+        {
+            // Carrega a cena com o nome "fase2". Substitua "fase2" pelo nome da sua cena de destino.
+            SceneManager.LoadScene("fase2");
         }
     }
-
-    private void CarregarFase()
-    {
-        // Carrega a cena com o nome "fase2". Substitua "fase2" pelo nome da sua cena de destino.
-        SceneManager.LoadScene("fase2");
-    }
-}
 
 
 
